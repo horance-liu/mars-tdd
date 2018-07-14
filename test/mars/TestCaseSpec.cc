@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
+#include <mars/core/TestFixture.h>
 #include <mars/core/TestMethod.h>
 
 namespace {
   std::string result;
 
-  struct WasRun {
-    void setUp() {
+  struct WasRun : TestFixture {
+    void setUp() override {
       result += "[setUp]";
     }
 
@@ -13,7 +14,7 @@ namespace {
       result += "[runTest]";
     }
 
-    void tearDown() {
+    void tearDown() override {
       result += "[tearDown]";
     }
   };
@@ -23,13 +24,11 @@ namespace {
     void SetUp() override {
       result.clear();
     }
-
-  protected:
-    TestMethod<WasRun> test = &WasRun::testMethod;
   };
 }
 
 TEST_F(TestCaseSpec, full_life_cycle_for_test_case) {
+  TestMethod<WasRun> test(&WasRun::testMethod);
   test.run();
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
