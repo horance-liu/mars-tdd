@@ -12,6 +12,10 @@ namespace {
     void testMethod() {
       result += "[runTest]";
     }
+
+    void tearDown() {
+      result += "[tearDown]";
+    }
   };
 
   struct TestCaseSpec : testing::Test {
@@ -25,7 +29,7 @@ namespace {
   };
 }
 
-TEST_F(TestCaseSpec, make_sure_setup_before_run_test) {
+TEST_F(TestCaseSpec, full_life_cycle_for_test_case) {
   test.run();
-  ASSERT_EQ("[setUp][runTest]", result);
+  ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
