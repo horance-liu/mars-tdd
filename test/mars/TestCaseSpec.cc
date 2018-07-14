@@ -4,14 +4,17 @@
 namespace {
   bool wasRun = false;
   bool wasSetUp = false;
+  std::string result;
 
   struct WasRun {
     void setUp() {
       wasSetUp = true;
+      result += "[setUp]";
     }
 
     void testMethod() {
       wasRun = true;
+      result += "[runTest]";
     }
   };
 
@@ -20,6 +23,7 @@ namespace {
     void SetUp() override {
       wasRun = false;
       wasSetUp = false;
+      result.clear();
     }
 
   protected:
@@ -37,4 +41,9 @@ TEST_F(TestCaseSpec, should_setup_before_run_test) {
   ASSERT_FALSE(wasSetUp);
   test.run();
   ASSERT_TRUE(wasSetUp);
+}
+
+TEST_F(TestCaseSpec, make_sure_setup_before_run_test) {
+  test.run();
+  ASSERT_EQ("[setUp][runTest]", result);
 }
