@@ -21,20 +21,19 @@ namespace {
       wasRun = false;
       wasSetUp = false;
     }
+
+  protected:
+    TestMethod<WasRun> test = &WasRun::testMethod;
   };
 }
 
 TEST_F(TestCaseSpec, make_sure_test_method_was_ran) {
-  TestMethod<WasRun> test(&WasRun::testMethod);
-
   ASSERT_FALSE(wasRun);
   test.run();
   ASSERT_TRUE(wasRun);
 }
 
 TEST_F(TestCaseSpec, should_setup_before_run_test) {
-  TestMethod<WasRun> test(&WasRun::testMethod);
-
   ASSERT_FALSE(wasSetUp);
   test.run();
   ASSERT_TRUE(wasSetUp);
