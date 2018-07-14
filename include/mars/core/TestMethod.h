@@ -11,6 +11,7 @@ public:
     : method(method) {}
 
   void run() {
+    self.setUp();
     (self.*method)();
   }
 
