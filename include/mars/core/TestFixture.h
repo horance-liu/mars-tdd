@@ -4,6 +4,7 @@
 struct TestFixture {
   virtual void setUp() {}
   virtual void tearDown() {}
+
   virtual ~TestFixture() {}
 };
 

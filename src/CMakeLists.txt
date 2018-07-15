@@ -5,5 +5,5 @@ FILE(GLOB_RECURSE all_files
 *.c
 *.C)
 
-# add_library(mars STATIC ${all_files})
-# install(TARGETS mars ARCHIVE DESTINATION lib)
+add_library(mars STATIC ${all_files})
+install(TARGETS mars ARCHIVE DESTINATION lib)
