@@ -11,9 +11,16 @@ namespace {
       num++;
     }
   };
+
+  struct TestSuiteSpec : testing::Test {
+  private:
+    void SetUp() override {
+      num = 0;  // IMPORTANT: reset counter.
+    }
+  };
 }
 
-TEST(TestSuite, pack_multi_test_cases_into_test_suite) {
+TEST_F(TestSuiteSpec, pack_test_cases_into_test_suite) {
   TestSuite suite;
   suite.add(new FooTest);
   suite.add(new FooTest);
