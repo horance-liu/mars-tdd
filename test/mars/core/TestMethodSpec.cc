@@ -1,4 +1,5 @@
 #include <mars/core/TestMethod.h>
+#include <mars/core/TestResult.h>
 #include <gtest/gtest.h>
 
 namespace {
@@ -36,7 +37,8 @@ namespace {
 
   protected:
     void run(::Test& test) {
-      test.run();
+      TestResult dummy;
+      test.run(dummy);
     }
   };
 }

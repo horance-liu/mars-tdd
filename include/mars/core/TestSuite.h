@@ -4,22 +4,22 @@
 #include <mars/core/Test.h>
 #include <vector>
 
+struct TestResult;
+
 struct TestSuite : Test {
-  TestSuite(const std::string& = "");
+  using Test::Test;
   ~TestSuite();
 
   void add(Test* test);
-  const std::string& getName() const;
 
 private:
-  void run() override;
+  void run(TestResult& result) override;
 
 private:
   template <typename F>
   void foreach(F f) const;
 
 private:
-  std::string name;
   std::vector<Test*> tests;
 };
 

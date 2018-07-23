@@ -8,7 +8,7 @@ struct TestCase : Test, private TestFixture {
   using Test::Test;
 
 private:
-  void run() override;
+  void run(TestResult&) override;
 
 private:
   virtual void runTest() {}

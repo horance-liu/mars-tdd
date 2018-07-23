@@ -1,55 +1,19 @@
 #include <mars/core/TestCase.h>
+#include <mars/core/TestResult.h>
 #include <gtest/gtest.h>
 
-namespace {
-  std::string result;
+struct TestCaseSpec : testing::Test {
+protected:
+  void run(::Test& test) {
+    test.run(result);
+  }
 
-  struct WasRun : TestCase {
-  private:
-    void setUp() override {
-      result += "[setUp]";
-    }
-
-    void runTest() override {
-      result += "[runTest]";
-    }
-
-    void tearDown() override {
-      result += "[tearDown]";
-    }
-  };
-
-  int num = 0;
-
-  struct FooTest : TestCase {
-  private:
-    void runTest() override {
-      num++;
-    }
-  };
-
-  struct TestCaseSpec : testing::Test {
-  private:
-    void SetUp() override {
-      result.clear();
-      num = 0;
-    }
-
-  protected:
-    void run(::Test& test) {
-      test.run();
-    }
-  };
-}
-
-TEST_F(TestCaseSpec, full_life_cycle_for_test_case) {
-  WasRun test;
-  run(test);
-  ASSERT_EQ("[setUp][runTest][tearDown]", result);
-}
+protected:
+  TestResult result;
+};
 
 TEST_F(TestCaseSpec, run_one_simple_test) {
-  FooTest foo;
-  run(foo);
-  ASSERT_EQ(1, num);
+  TestCase test;
+  run(test);
+  ASSERT_EQ(1, result.runCount());
 }

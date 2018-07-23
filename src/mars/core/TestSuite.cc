@@ -1,14 +1,6 @@
 #include <mars/core/TestSuite.h>
 #include <mars/core/TestCase.h>
 
-TestSuite::TestSuite(const std::string& name)
-  : name(name) {
-}
-
-const std::string& TestSuite::getName() const {
-  return name;
-}
-
 void TestSuite::add(Test* test) {
   tests.push_back(test);
 }
@@ -26,8 +18,9 @@ TestSuite::~TestSuite() {
   });
 }
 
-void TestSuite::run() {
-  foreach([](auto test) {
-    test->run();
+void TestSuite::run(TestResult& result) {
+  foreach([&result](auto test) {
+    test->run(result);
   });
 }
+
