@@ -5,9 +5,11 @@
 #include <vector>
 
 struct TestSuite : Test {
+  TestSuite(const std::string& = "");
   ~TestSuite();
 
   void add(Test* test);
+  const std::string& getName() const;
 
 private:
   void run() override;
@@ -17,6 +19,7 @@ private:
   void foreach(F f) const;
 
 private:
+  std::string name;
   std::vector<Test*> tests;
 };
 

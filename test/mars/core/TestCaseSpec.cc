@@ -53,3 +53,8 @@ TEST_F(TestCaseSpec, run_one_simple_test) {
   run(foo);
   ASSERT_EQ(1, num);
 }
+
+TEST(NamedTestCase, named_test_case) {
+  TestCase test("test case");
+  ASSERT_EQ("test case", test.getName());
+}
