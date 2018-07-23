@@ -48,7 +48,3 @@ TEST_F(TestSuiteSpec, package_sub_test_suite_into_outter_test_suite) {
   ASSERT_EQ(2, num);
 }
 
-TEST(NamedTestSuite, named_test_case) {
-  TestSuite suite("test suite");
-  ASSERT_EQ("test suite", suite.getName());
-}

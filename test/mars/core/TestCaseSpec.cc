@@ -43,18 +43,13 @@ namespace {
 }
 
 TEST_F(TestCaseSpec, full_life_cycle_for_test_case) {
-  FooTest foo;
-  run(foo);
-  ASSERT_EQ(1, num);
+  WasRun test;
+  run(test);
+  ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
 
 TEST_F(TestCaseSpec, run_one_simple_test) {
   FooTest foo;
   run(foo);
   ASSERT_EQ(1, num);
-}
-
-TEST(NamedTestCase, named_test_case) {
-  TestCase test("test case");
-  ASSERT_EQ("test case", test.getName());
 }

@@ -47,7 +47,6 @@ TEST_F(TestMethodSpec, full_life_cycle_for_test_case) {
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
 
-
 TEST_F(TestMethodSpec, make_sure_test_running_is_succ) {
   TestMethod<WasSucc> test(&WasSucc::testMethod);
 
