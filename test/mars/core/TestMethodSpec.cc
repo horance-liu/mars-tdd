@@ -18,28 +18,40 @@ namespace {
       result += "[tearDown]";
     }
   };
-}
 
-TEST(WasRunSpec, full_life_cycle_for_test_case) {
-  TestMethod<WasRun> test(&WasRun::testMethod);
-  test.run();
-  ASSERT_EQ("[setUp][runTest][tearDown]", result);
-}
-
-namespace {
-  bool wasSucc = false;
+  bool wasSucc;
 
   struct WasSucc : TestFixture {
     void testMethod() {
       wasSucc = true;
     }
   };
+
+  struct TestMethodSpec : testing::Test {
+  private:
+    void SetUp() override {
+      result.clear();
+      wasSucc = false;
+    }
+
+  protected:
+    void run(::Test& test) {
+      test.run();
+    }
+  };
 }
 
-TEST(WasSuccSpec, make_sure_test_running_is_succ) {
+TEST_F(TestMethodSpec, full_life_cycle_for_test_case) {
+  TestMethod<WasRun> test(&WasRun::testMethod);
+  run(test);
+  ASSERT_EQ("[setUp][runTest][tearDown]", result);
+}
+
+
+TEST_F(TestMethodSpec, make_sure_test_running_is_succ) {
   TestMethod<WasSucc> test(&WasSucc::testMethod);
 
   ASSERT_FALSE(wasSucc);
-  test.run();
+  run(test);
   ASSERT_TRUE(wasSucc);
 }

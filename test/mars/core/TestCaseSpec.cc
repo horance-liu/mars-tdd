@@ -18,18 +18,7 @@ namespace {
       result += "[tearDown]";
     }
   };
-}
 
-TEST(WasRunSpec, full_life_cycle_for_test_case_using_test_case) {
-  WasRun test;
-  test.run();
-  ASSERT_EQ("[setUp][runTest][tearDown]", result);
-}
-
-#include <mars/core/TestCase.h>
-#include <gtest/gtest.h>
-
-namespace {
   int num = 0;
 
   struct FooTest : TestCase {
@@ -42,13 +31,25 @@ namespace {
   struct TestCaseSpec : testing::Test {
   private:
     void SetUp() override {
-      num = 0;  // IMPORTANT: reset counter.
+      result.clear();
+      num = 0;
+    }
+
+  protected:
+    void run(::Test& test) {
+      test.run();
     }
   };
 }
 
+TEST_F(TestCaseSpec, full_life_cycle_for_test_case) {
+  FooTest foo;
+  run(foo);
+  ASSERT_EQ(1, num);
+}
+
 TEST_F(TestCaseSpec, run_one_simple_test) {
   FooTest foo;
-  foo.run();
+  run(foo);
   ASSERT_EQ(1, num);
 }

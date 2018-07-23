@@ -1,7 +1,7 @@
 #include <mars/core/TestSuite.h>
 #include <mars/core/TestCase.h>
 
-void TestSuite::add(TestCase* test) {
+void TestSuite::add(Test* test) {
   tests.push_back(test);
 }
 
