@@ -4,8 +4,14 @@
 #include <string>
 
 struct Test {
+  explicit Test(const std::string& = "");
+  const std::string& getName() const;
+
   virtual void run() = 0;
   virtual ~Test() {}
+
+private:
+  std::string name;
 };
 
 #endif

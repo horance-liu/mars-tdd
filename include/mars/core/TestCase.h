@@ -5,17 +5,13 @@
 #include <mars/core/TestFixture.h>
 
 struct TestCase : Test, private TestFixture {
-  TestCase(const std::string& = "");
-  const std::string& getName() const;
+  using Test::Test;
 
 private:
   void run() override;
 
 private:
   virtual void runTest() {}
-
-private:
-  std::string name;
 };
 
 #endif
