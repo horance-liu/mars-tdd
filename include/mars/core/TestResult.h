@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <mars/except/TestFailure.h>
 
 struct TestCaseFunctor;
 
@@ -17,7 +18,7 @@ struct TestResult {
 
   bool protect(const TestCaseFunctor&);
 
-  using TestFailures = std::vector<std::string>;
+  using TestFailures = std::vector<TestFailure>;
   const TestFailures& getFailures() const;
 
   using TestErrors = std::vector<std::string>;

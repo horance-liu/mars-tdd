@@ -22,7 +22,7 @@ int TestResult::errorCount() const {
 }
 
 inline void TestResult::addFailure(std::string&& msg) {
-  failures.emplace_back(std::move(msg));
+  failures.emplace_back(std::move(msg), true);
 }
 
 inline void TestResult::addError(std::string&& msg) {
