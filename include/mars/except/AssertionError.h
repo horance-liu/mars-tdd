@@ -6,6 +6,10 @@
 
 struct AssertionError : std::exception {
   AssertionError(const std::string& src, const std::string& msg);
+  const char* what() const noexcept;
+
+private:
+  std::string msg;
 };
 
 #endif
