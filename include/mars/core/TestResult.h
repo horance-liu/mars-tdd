@@ -29,9 +29,6 @@ private:
 
 private:
   int numOfRuns;
-  int numOfFails;
-  int numOfErrors;
-
   TestFailures failures;
   TestErrors errors;
 };

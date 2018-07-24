@@ -2,8 +2,7 @@
 #include <mars/except/AssertionError.h>
 #include <mars/core/internal/TestCaseFunctor.h>
 
-TestResult::TestResult()
-  : numOfRuns(0), numOfFails(0), numOfErrors(0) {
+TestResult::TestResult() : numOfRuns(0) {
 }
 
 void TestResult::startTestCase() {
@@ -15,20 +14,18 @@ int TestResult::runCount() const {
 }
 
 int TestResult::failCount() const {
-  return numOfFails;
+  return failures.size();
 }
 
 int TestResult::errorCount() const {
-  return numOfErrors;
+  return errors.size();
 }
 
 inline void TestResult::addFailure(std::string&& msg) {
-  numOfFails++;
   failures.emplace_back(std::move(msg));
 }
 
 inline void TestResult::addError(std::string&& msg) {
-  numOfErrors++;
   errors.emplace_back(std::move(msg));
 }
 
@@ -40,7 +37,7 @@ bool TestResult::protect(const TestCaseFunctor& f) {
   } catch (const std::exception& e) {
     addError(std::string("uncaught std::exception") + ' ' + f.where() + '\n' + e.what());
   } catch (...) {
-    addError("");
+    addError(std::string("uncaught unknown exception") + " " + f.where() + "\n" + "");
   }
   return false;
 }
@@ -52,4 +49,3 @@ const TestResult::TestFailures& TestResult::getFailures() const {
 const TestResult::TestErrors& TestResult::getErrors() const {
   return errors;
 }
-

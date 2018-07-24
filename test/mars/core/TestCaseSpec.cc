@@ -119,6 +119,10 @@ namespace {
   struct NilException {};
 
   struct UnknownErrorOnRunningTest : TestCase {
+    const char* expectMsg() const {
+      return "uncaught unknown exception in the runTest\n";
+    }
+
   private:
     void runTest() override {
       throw NilException();
@@ -130,4 +134,13 @@ TEST_F(TestCaseSpec, throw_unknown_exception_on_running_test) {
   UnknownErrorOnRunningTest test;
   run(test);
   ASSERT_EQ(1, result.errorCount());
+}
+
+TEST_F(TestCaseSpec, extract_unknown_error_msg_on_running_test_failed) {
+  UnknownErrorOnRunningTest test;
+  run(test);
+
+  auto& errors = result.getErrors();
+  ASSERT_EQ(1, errors.size());
+  ASSERT_EQ(test.expectMsg(), errors.front());
 }
