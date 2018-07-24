@@ -9,9 +9,13 @@ struct TestCase : Test, private TestFixture {
 
 private:
   void run(TestResult&) override;
+  int countTestCases() const override;
 
 private:
   virtual void runTest() {}
+
+private:
+  void runBare();
 };
 
 #endif

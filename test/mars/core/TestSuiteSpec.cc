@@ -10,12 +10,16 @@ namespace {
       test.run(result);
     }
 
+    int countTestCases(::Test& test) {
+      return test.countTestCases();
+    }
+
   protected:
     TestResult result;
   };
 }
 
-TEST_F(TestSuiteSpec, pack_test_cases_into_test_suite) {
+TEST_F(TestSuiteSpec, count_test_cases_from_result) {
   TestSuite suite;
   suite.add(new TestCase);
   suite.add(new TestCase);
@@ -23,6 +27,14 @@ TEST_F(TestSuiteSpec, pack_test_cases_into_test_suite) {
   run(suite);
 
   ASSERT_EQ(2, result.runCount());
+}
+
+TEST_F(TestSuiteSpec, count_test_cases_from_tree) {
+  TestSuite suite;
+  suite.add(new TestCase);
+  suite.add(new TestCase);
+
+  ASSERT_EQ(2, countTestCases(suite));
 }
 
 TEST_F(TestSuiteSpec, package_sub_test_suite_into_outter_test_suite) {

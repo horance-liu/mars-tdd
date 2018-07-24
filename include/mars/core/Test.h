@@ -10,6 +10,7 @@ struct Test {
   const std::string& getName() const;
 
   virtual void run(TestResult&) = 0;
+  virtual int countTestCases() const = 0;
   virtual ~Test() {}
 
 private:

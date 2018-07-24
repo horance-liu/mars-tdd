@@ -14,10 +14,14 @@ struct TestSuite : Test {
 
 private:
   void run(TestResult& result) override;
+  int countTestCases() const override;
 
 private:
   template <typename F>
   void foreach(F f) const;
+
+  template <typename Init, typename F>
+  Init reduce(Init init, F f) const;
 
 private:
   std::vector<Test*> tests;
