@@ -17,18 +17,23 @@ struct TestResult {
 
   bool protect(const TestCaseFunctor&);
 
-  const std::vector<std::string> getFailures() const;
+  using TestFailures = std::vector<std::string>;
+  const TestFailures& getFailures() const;
+
+  using TestErrors = std::vector<std::string>;
+  const TestErrors& getErrors() const;
 
 private:
   void addFailure(std::string&& msg);
-  void addError();
+  void addError(std::string&& msg);
 
 private:
   int numOfRuns;
   int numOfFails;
   int numOfErrors;
 
-  std::vector<std::string> failures;
+  TestFailures failures;
+  TestErrors errors;
 };
 
 #endif
