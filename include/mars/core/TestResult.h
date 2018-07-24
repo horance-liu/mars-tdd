@@ -7,8 +7,12 @@ struct TestResult {
   void startTestCase();
   int runCount() const;
 
+  int failCount() const;
+  void addFailure();
+
 private:
   int numOfRuns;
+  int numOfFails;
 };
 
 #endif

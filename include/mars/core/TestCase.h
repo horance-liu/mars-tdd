@@ -15,7 +15,7 @@ private:
   virtual void runTest() {}
 
 private:
-  void runBare();
+  void runBare(TestResult& result);
 };
 
 #endif
