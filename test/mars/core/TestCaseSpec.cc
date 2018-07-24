@@ -57,3 +57,17 @@ TEST_F(TestCaseSpec, throw_assertion_error_on_setup) {
   ASSERT_EQ(1, result.failCount());
   ASSERT_FALSE(test.wasRun);
 }
+
+namespace {
+  struct FailureOnTearDown : TestCase {
+    void tearDown() override {
+      throw AssertionError("product.cc:57", "expected value == 2, but got 3");
+    }
+  };
+}
+
+TEST_F(TestCaseSpec, throw_assertion_error_on_tear_down) {
+  FailureOnTearDown test;
+  run(test);
+  ASSERT_EQ(1, result.failCount());
+}

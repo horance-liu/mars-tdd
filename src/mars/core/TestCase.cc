@@ -17,7 +17,7 @@ void TestCase::runBare(TestResult& result) {
   if (protect(result, &TestCase::setUp)) {
     protect(result, &TestCase::runTest);
   }
-  tearDown();
+  protect(result, &TestCase::tearDown);
 }
 
 void TestCase::run(TestResult& result) {
