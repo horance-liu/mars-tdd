@@ -85,3 +85,20 @@ TEST_F(TestCaseSpec, throw_std_exception_on_run_test) {
   run(test);
   ASSERT_EQ(1, result.errorCount());
 }
+
+namespace {
+  struct NilException {};
+
+  struct UnknownErrorOnRunningTest : TestCase {
+  private:
+    void runTest() override {
+      throw NilException();
+    }
+  };
+}
+
+TEST_F(TestCaseSpec, throw_unknown_exception_on_running_test) {
+  UnknownErrorOnRunningTest test;
+  run(test);
+  ASSERT_EQ(1, result.errorCount());
+}
