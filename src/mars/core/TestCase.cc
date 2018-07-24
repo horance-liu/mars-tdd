@@ -2,12 +2,20 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 
-void TestCase::runBare(TestResult& result) {
-  setUp();
+bool TestCase::protect(TestResult& result, Method method) {
+  bool succ = false;
   try {
-    runTest();
+    (this->*method)();
+    succ = true;
   } catch (const AssertionError&) {
     result.addFailure();
+  }
+  return succ;
+}
+
+void TestCase::runBare(TestResult& result) {
+  if (protect(result, &TestCase::setUp)) {
+    protect(result, &TestCase::runTest);
   }
   tearDown();
 }
