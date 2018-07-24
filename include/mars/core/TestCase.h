@@ -4,6 +4,8 @@
 #include <mars/core/Test.h>
 #include <mars/core/TestFixture.h>
 
+struct TestCaseFunctor;
+
 struct TestCase : Test, private TestFixture {
   using Test::Test;
 
@@ -16,9 +18,6 @@ private:
 
 private:
   void runBare(TestResult& result);
-
-  using Method = void(TestCase::*)();
-  bool protect(TestResult& result, Method method);
 };
 
 #endif

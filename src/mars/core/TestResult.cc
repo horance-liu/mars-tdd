@@ -1,4 +1,6 @@
 #include <mars/core/TestResult.h>
+#include <mars/except/AssertionError.h>
+#include <mars/core/internal/TestCaseFunctor.h>
 
 TestResult::TestResult()
   : numOfRuns(0), numOfFails(0), numOfErrors(0) {
@@ -12,18 +14,31 @@ int TestResult::runCount() const {
   return numOfRuns;
 }
 
-void TestResult::addFailure() {
-  numOfFails++;
-}
-
 int TestResult::failCount() const {
   return numOfFails;
 }
 
-void TestResult::addError() {
+int TestResult::errorCount() const {
+  return numOfErrors;
+}
+
+inline void TestResult::addFailure() {
+  numOfFails++;
+}
+
+inline void TestResult::addError() {
   numOfErrors++;
 }
 
-int TestResult::errorCount() const {
-  return numOfErrors;
+bool TestResult::protect(const TestCaseFunctor& f) {
+  try {
+    return f();
+  } catch (const AssertionError&) {
+    addFailure();
+  } catch (const std::exception&) {
+    addError();
+  } catch (...) {
+    addError();
+  }
+  return false;
 }
