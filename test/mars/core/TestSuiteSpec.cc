@@ -2,6 +2,7 @@
 #include <mars/core/TestCase.h>
 #include <mars/core/TestResult.h>
 #include <gtest/gtest.h>
+#include <mars/listener/TestCollector.h>
 
 namespace {
   struct TestSuiteSpec : testing::Test {
@@ -14,7 +15,13 @@ namespace {
       return test.countTestCases();
     }
 
+  private:
+    void SetUp() override {
+      result.addListener(collector);
+    }
+
   protected:
+    TestCollector collector;
     TestResult result;
   };
 }
@@ -26,7 +33,7 @@ TEST_F(TestSuiteSpec, count_test_cases_from_result) {
 
   run(suite);
 
-  ASSERT_EQ(2, result.runCount());
+  ASSERT_EQ(2, collector.runCount());
 }
 
 TEST_F(TestSuiteSpec, count_test_cases_from_tree) {
@@ -47,6 +54,6 @@ TEST_F(TestSuiteSpec, package_sub_test_suite_into_outter_test_suite) {
 
   run(outter);
 
-  ASSERT_EQ(2, result.runCount());
+  ASSERT_EQ(2, collector.runCount());
 }
 

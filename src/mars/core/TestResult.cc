@@ -1,17 +1,17 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <mars/core/internal/TestCaseFunctor.h>
+#include <mars/core/TestListener.h>
 #include <algorithm>
 
-TestResult::TestResult() : numOfRuns(0) {
+void TestResult::addListener(TestListener& listener) {
+  listeners.push_back(&listener);
 }
 
-void TestResult::startTestCase() {
-  numOfRuns++;
-}
-
-int TestResult::runCount() const {
-  return numOfRuns;
+void TestResult::startTestCase(const Test& test) {
+  for (auto listener : listeners) {
+    listener->startTestCase(test);
+  }
 }
 
 int TestResult::failCount() const {

@@ -38,7 +38,7 @@ void TestCase::runBare(TestResult& result) {
 }
 
 void TestCase::run(TestResult& result) {
-  result.startTestCase();
+  result.startTestCase(*this);
   runBare(result);
 }
 

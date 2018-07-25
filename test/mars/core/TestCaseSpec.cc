@@ -13,12 +13,6 @@ protected:
   TestResult result;
 };
 
-TEST_F(TestCaseSpec, run_one_simple_test) {
-  TestCase test;
-  run(test);
-  ASSERT_EQ(1, result.runCount());
-}
-
 namespace {
   struct FailureOnRunningTest : TestCase {
     const char* expectMsg() const {
