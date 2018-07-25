@@ -2,6 +2,7 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
+#include <mars/listener/FailureLister.h>
 #include <mars/listener/TestCollector.h>
 
 struct TestCaseSpec : testing::Test {
@@ -13,9 +14,11 @@ protected:
 private:
   void SetUp() override {
     result.addListener(collector);
+    result.addListener(lister);
   }
 
 protected:
+  FailureLister lister;
   TestCollector collector;
   TestResult result;
 };
@@ -46,12 +49,10 @@ TEST_F(TestCaseSpec, extract_except_msg_on_running_test_failed) {
   FailureOnRunningTest test;
   run(test);
 
-  auto& fails = result.getFailures();
-  ASSERT_EQ(1, fails.size());
-
-  auto& fail = fails[0];
-  ASSERT_TRUE(fail.isFailure());
-  ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
+  lister.foreach([&test](auto& fail){
+    ASSERT_TRUE(fail.isFailure());
+    ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
+  });
 }
 
 namespace {
@@ -114,12 +115,10 @@ TEST_F(TestCaseSpec, extract_error_msgt_on_running_test_failed) {
   ErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getFailures();
-  ASSERT_EQ(1, errors.size());
-
-  auto& error = errors[0];
-  ASSERT_FALSE(error.isFailure());
-  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  lister.foreach([&test](auto& error){
+    ASSERT_FALSE(error.isFailure());
+    ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  });
 }
 
 namespace {
@@ -147,10 +146,8 @@ TEST_F(TestCaseSpec, extract_unknown_error_msg_on_running_test_failed) {
   UnknownErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getFailures();
-  ASSERT_EQ(1, errors.size());
-
-  auto& error = errors[0];
-  ASSERT_FALSE(error.isFailure());
-  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  lister.foreach([&test](auto& error){
+    ASSERT_FALSE(error.isFailure());
+    ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  });
 }
