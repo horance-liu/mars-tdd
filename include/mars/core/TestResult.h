@@ -13,16 +13,16 @@ struct TestResult {
   void addListener(TestListener& listener);
 
   void startTestCase(const Test&);
-
-  int errorCount() const;
+  void endTestCase(const Test&);
 
   bool protect(const TestCaseFunctor&);
 
   const std::vector<TestFailure>& getFailures() const;
 
 private:
-  void addFailure(std::string&& msg);
-  void addError(std::string&& msg);
+  void onFail(std::string&& msg);
+  void onError(std::string&& msg);
+  void addFailure(TestFailure&&);
 
 private:
   std::vector<TestFailure> failures;

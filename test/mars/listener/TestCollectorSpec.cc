@@ -3,6 +3,7 @@
 #include <mars/core/TestCase.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
+#include <mars/core/TestSuite.h>
 
 namespace {
   struct TestCollectorSpec : testing::Test {
@@ -22,8 +23,12 @@ namespace {
   };
 }
 
+namespace {
+  struct Success : TestCase {};
+}
+
 TEST_F(TestCollectorSpec, count_single_one_test_case) {
-  TestCase test;
+  Success test;
   run(test);
   ASSERT_EQ(1, collector.runCount());
 }
@@ -41,5 +46,31 @@ TEST_F(TestCollectorSpec, throw_assertion_error_on_run_test) {
   FailureOnRunningTest test;
   run(test);
 
+  ASSERT_EQ(1, collector.failCount());
+}
+
+namespace {
+  struct ErrorOnRunningTest : TestCase {
+   void runTest() override {
+      throw std::exception();
+    }
+  };
+}
+
+TEST_F(TestCollectorSpec, throw_std_exception_on_run_test) {
+  ErrorOnRunningTest test;
+  run(test);
+  ASSERT_EQ(1, collector.errorCount());
+}
+
+TEST_F(TestCollectorSpec, count_test_cases_from_collector) {
+  TestSuite suite;
+  suite.add(new TestCase);
+  suite.add(new FailureOnRunningTest);
+
+  run(suite);
+
+  ASSERT_EQ(2, collector.runCount());
+  ASSERT_EQ(1, collector.passCount());
   ASSERT_EQ(1, collector.failCount());
 }
