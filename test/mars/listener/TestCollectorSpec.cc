@@ -27,7 +27,7 @@ namespace {
   struct Success : TestCase {};
 }
 
-TEST_F(TestCollectorSpec, count_single_one_test_case) {
+TEST_F(TestCollectorSpec, count_single_test_case) {
   Success test;
   run(test);
   ASSERT_EQ(1, collector.runCount());
