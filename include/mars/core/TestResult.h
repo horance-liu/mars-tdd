@@ -14,7 +14,6 @@ struct TestResult {
 
   void startTestCase(const Test&);
 
-  int failCount() const;
   int errorCount() const;
 
   bool protect(const TestCaseFunctor&);

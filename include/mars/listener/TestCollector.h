@@ -7,12 +7,15 @@ struct TestCollector : TestListener {
   TestCollector();
 
   int runCount() const;
+  int failCount() const;
 
 private:
   void startTestCase(const Test&) override;
+  void addFailure(const TestFailure&) override;
 
 private:
   int numOfRuns;
+  int numOfFails;
 };
 
 #endif

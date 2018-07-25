@@ -2,6 +2,7 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
+#include <mars/listener/TestCollector.h>
 
 struct TestCaseSpec : testing::Test {
 protected:
@@ -9,7 +10,13 @@ protected:
     test.run(result);
   }
 
+private:
+  void SetUp() override {
+    result.addListener(collector);
+  }
+
 protected:
+  TestCollector collector;
   TestResult result;
 };
 
@@ -32,7 +39,7 @@ TEST_F(TestCaseSpec, throw_assertion_error_on_run_test) {
   FailureOnRunningTest test;
   run(test);
 
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
 }
 
 TEST_F(TestCaseSpec, extract_except_msg_on_running_test_failed) {
@@ -66,7 +73,7 @@ TEST_F(TestCaseSpec, throw_assertion_error_on_setup) {
   FailureOnSetUp test;
   run(test);
 
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
   ASSERT_FALSE(test.wasRun);
 }
 
@@ -81,7 +88,7 @@ namespace {
 TEST_F(TestCaseSpec, throw_assertion_error_on_tear_down) {
   FailureOnTearDown test;
   run(test);
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
 }
 
 namespace {
