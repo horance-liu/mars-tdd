@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <mars/core/TestListener.h>
+#include <mars/except/TestFailure.h>
 
 struct TestFailure;
 
-struct FailureLister : TestListener {
+struct FailureList : TestListener {
   template <typename F>
   void foreach(F f) const {
     for (auto failure : failures) {

@@ -2,7 +2,7 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
-#include <mars/listener/FailureLister.h>
+#include <mars/listener/FailureList.h>
 
 struct FailureListerSpec : testing::Test {
 protected:
@@ -12,11 +12,11 @@ protected:
 
 private:
   void SetUp() override {
-    result.addListener(lister);
+    result.addListener(list);
   }
 
 protected:
-  FailureLister lister;
+  FailureList list;
   TestResult result;
 };
 
@@ -35,12 +35,11 @@ namespace {
   };
 }
 
-
 TEST_F(FailureListerSpec, extract_except_msg_on_running_test_failed) {
   FailureOnRunningTest test;
   run(test);
 
-  lister.foreach([&test](auto& fail) {
+  list.foreach([&test](auto& fail) {
     ASSERT_TRUE(fail.isFailure());
     ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
   });

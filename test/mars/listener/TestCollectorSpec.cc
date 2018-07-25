@@ -2,8 +2,8 @@
 #include <mars/core/TestResult.h>
 #include <mars/core/TestCase.h>
 #include <mars/except/AssertionError.h>
-#include <gtest/gtest.h>
 #include <mars/core/TestSuite.h>
+#include <gtest/gtest.h>
 
 namespace {
   struct TestCollectorSpec : testing::Test {
@@ -23,12 +23,8 @@ namespace {
   };
 }
 
-namespace {
-  struct Success : TestCase {};
-}
-
 TEST_F(TestCollectorSpec, count_single_test_case) {
-  Success test;
+  TestCase test;
   run(test);
   ASSERT_EQ(1, collector.runCount());
 }
