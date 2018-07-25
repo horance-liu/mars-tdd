@@ -113,7 +113,7 @@ TEST_F(TestCaseSpec, extract_error_msgt_on_running_test_failed) {
   ErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getErrors();
+  auto& errors = result.getFailures();
   ASSERT_EQ(1, errors.size());
 
   auto& error = errors[0];
@@ -146,7 +146,7 @@ TEST_F(TestCaseSpec, extract_unknown_error_msg_on_running_test_failed) {
   UnknownErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getErrors();
+  auto& errors = result.getFailures();
   ASSERT_EQ(1, errors.size());
 
   auto& error = errors[0];
