@@ -1,4 +1,4 @@
-#include "mars/except/TestFailure.h"
+#include <mars/except/TestFailure.h>
 
 TestFailure::TestFailure(std::string&& msg, bool failure)
   : msg(std::move(msg)), failure(failure) {

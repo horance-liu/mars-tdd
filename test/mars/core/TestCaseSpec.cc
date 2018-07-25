@@ -115,7 +115,10 @@ TEST_F(TestCaseSpec, extract_error_msgt_on_running_test_failed) {
 
   auto& errors = result.getErrors();
   ASSERT_EQ(1, errors.size());
-  ASSERT_EQ(test.expectMsg(), errors.front());
+
+  auto& error = errors[0];
+  ASSERT_FALSE(error.isFailure());
+  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
 }
 
 namespace {
@@ -145,5 +148,8 @@ TEST_F(TestCaseSpec, extract_unknown_error_msg_on_running_test_failed) {
 
   auto& errors = result.getErrors();
   ASSERT_EQ(1, errors.size());
-  ASSERT_EQ(test.expectMsg(), errors.front());
+
+  auto& error = errors[0];
+  ASSERT_FALSE(error.isFailure());
+  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
 }

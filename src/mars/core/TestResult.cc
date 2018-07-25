@@ -26,7 +26,7 @@ inline void TestResult::addFailure(std::string&& msg) {
 }
 
 inline void TestResult::addError(std::string&& msg) {
-  errors.emplace_back(std::move(msg));
+  errors.emplace_back(std::move(msg), false);
 }
 
 bool TestResult::protect(const TestCaseFunctor& f) {
@@ -42,10 +42,10 @@ bool TestResult::protect(const TestCaseFunctor& f) {
   return false;
 }
 
-const TestResult::TestFailures& TestResult::getFailures() const {
+const std::vector<TestFailure>& TestResult::getFailures() const {
   return failures;
 }
 
-const TestResult::TestErrors& TestResult::getErrors() const {
+const std::vector<TestFailure>& TestResult::getErrors() const {
   return errors;
 }
