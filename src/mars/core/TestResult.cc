@@ -1,7 +1,8 @@
 #include <mars/core/TestResult.h>
-#include <mars/except/AssertionError.h>
-#include <mars/core/internal/TestCaseFunctor.h>
+#include <mars/core/Test.h>
 #include <mars/core/TestListener.h>
+#include <mars/core/internal/TestCaseFunctor.h>
+#include <mars/except/AssertionError.h>
 
 void TestResult::addListener(TestListener& listener) {
   listeners.push_back(&listener);
@@ -9,6 +10,12 @@ void TestResult::addListener(TestListener& listener) {
 
 #define BOARDCAST(action) \
   for (auto listener : listeners) listener->action
+
+void TestResult::runRootTest(Test& test) {
+  BOARDCAST(startTestRun(test));
+  test.run(*this);
+  BOARDCAST(endTestRun(test));
+}
 
 void TestResult::startTestCase(const Test& test) {
   BOARDCAST(startTestCase(test));
