@@ -1,8 +1,8 @@
+#include <mars/listener/collector/FailureList.h>
 #include <mars/core/TestCase.h>
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
-#include <mars/listener/FailureList.h>
 
 struct FailureListerSpec : testing::Test {
 protected:

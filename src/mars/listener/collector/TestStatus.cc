@@ -1,4 +1,4 @@
-#include <mars/listener/TestStatus.h>
+#include <mars/listener/collector/TestStatus.h>
 
 TestStatus::TestStatus() : succ(true) {
 }

@@ -2,8 +2,8 @@
 #include <mars/core/TestResult.h>
 #include <mars/except/AssertionError.h>
 #include <gtest/gtest.h>
-#include <mars/listener/FailureList.h>
-#include <mars/listener/TestCollector.h>
+#include <mars/listener/collector/FailureList.h>
+#include <mars/listener/collector/TestCollector.h>
 
 struct TestCaseSpec : testing::Test {
 protected:

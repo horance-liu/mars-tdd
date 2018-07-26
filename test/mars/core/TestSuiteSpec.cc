@@ -2,7 +2,7 @@
 #include <mars/core/TestCase.h>
 #include <mars/core/TestResult.h>
 #include <gtest/gtest.h>
-#include <mars/listener/TestCollector.h>
+#include <mars/listener/collector/TestCollector.h>
 
 namespace {
   struct TestSuiteSpec : testing::Test {

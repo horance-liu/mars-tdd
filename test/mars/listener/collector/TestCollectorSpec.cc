@@ -1,4 +1,4 @@
-#include <mars/listener/TestCollector.h>
+#include <mars/listener/collector/TestCollector.h>
 #include <mars/core/TestResult.h>
 #include <mars/core/TestCase.h>
 #include <mars/except/AssertionError.h>

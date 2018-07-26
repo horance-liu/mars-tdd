@@ -1,4 +1,4 @@
-#include <mars/listener/TestCollector.h>
+#include <mars/listener/collector/TestCollector.h>
 #include <mars/except/TestFailure.h>
 
 TestCollector::TestCollector()
