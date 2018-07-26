@@ -12,7 +12,8 @@ struct TestCaseFunctor;
 struct TestResult {
   void addListener(TestListener& listener);
 
-  void runRootTest(Test&);
+  void startTestRun(const Test&);
+  void endTestRun(const Test&);
 
   void startTestCase(const Test&);
   void endTestCase(const Test&);
