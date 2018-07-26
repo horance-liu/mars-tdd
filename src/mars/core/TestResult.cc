@@ -1,5 +1,6 @@
 #include <mars/core/TestResult.h>
 #include <mars/core/TestListener.h>
+#include <mars/core/Test.h>
 #include <mars/core/internal/TestCaseFunctor.h>
 #include <mars/core/internal/BareTestCase.h>
 #include <mars/core/internal/BareTestSuite.h>
@@ -12,11 +13,9 @@ void TestResult::addListener(TestListener& listener) {
 #define BOARDCAST(action) \
   for (auto listener : listeners) listener->action
 
-void TestResult::startTestRun(const Test& test) {
+void TestResult::runRootTest(Test& test) {
   BOARDCAST(startTestRun(test));
-}
-
-void TestResult::endTestRun(const Test& test) {
+  test.run(*this);
   BOARDCAST(endTestRun(test));
 }
 

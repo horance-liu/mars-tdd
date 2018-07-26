@@ -12,9 +12,7 @@ namespace {
     }
 
     void run(::Test& test) {
-      result.startTestRun(test);
-      test.run(result);
-      result.endTestRun(test);
+      result.runRootTest(test);
     }
 
     void assertTime(const TimeVal& val) {
