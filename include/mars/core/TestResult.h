@@ -15,6 +15,9 @@ struct TestResult {
   void startTestRun(const Test&);
   void endTestRun(const Test&);
 
+  void startTestSuite(const Test&);
+  void endTestSuite(const Test&);
+
   void startTestCase(const Test&);
   void endTestCase(const Test&);
 

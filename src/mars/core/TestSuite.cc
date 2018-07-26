@@ -1,5 +1,5 @@
 #include <mars/core/TestSuite.h>
-#include <mars/core/TestCase.h>
+#include <mars/core/TestResult.h>
 
 void TestSuite::add(Test* test) {
   tests.push_back(test);
@@ -19,9 +19,11 @@ TestSuite::~TestSuite() {
 }
 
 void TestSuite::run(TestResult& result) {
+  result.startTestSuite(*this);
   foreach([&result](auto test) {
     test->run(result);
   });
+  result.endTestSuite(*this);
 }
 
 template <typename Init, typename F>

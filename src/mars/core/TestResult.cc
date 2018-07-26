@@ -18,6 +18,14 @@ void TestResult::endTestRun(const Test& test) {
   BOARDCAST(endTestRun(test));
 }
 
+void TestResult::startTestSuite(const Test& test) {
+  BOARDCAST(startTestSuite(test));
+}
+
+void TestResult::endTestSuite(const Test& test) {
+  BOARDCAST(endTestSuite(test));
+}
+
 void TestResult::startTestCase(const Test& test) {
   BOARDCAST(startTestCase(test));
 }
