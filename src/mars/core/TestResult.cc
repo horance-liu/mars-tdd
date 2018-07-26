@@ -2,6 +2,7 @@
 #include <mars/core/TestListener.h>
 #include <mars/core/internal/TestCaseFunctor.h>
 #include <mars/core/internal/BareTestCase.h>
+#include <mars/core/internal/BareTestSuite.h>
 #include <mars/except/AssertionError.h>
 
 void TestResult::addListener(TestListener& listener) {
@@ -19,12 +20,10 @@ void TestResult::endTestRun(const Test& test) {
   BOARDCAST(endTestRun(test));
 }
 
-void TestResult::startTestSuite(const Test& test) {
-  BOARDCAST(startTestSuite(test));
-}
-
-void TestResult::endTestSuite(const Test& test) {
-  BOARDCAST(endTestSuite(test));
+void TestResult::runTestSuite(BareTestSuite& test) {
+  BOARDCAST(startTestSuite(test.get()));
+  test.runBare(*this);
+  BOARDCAST(endTestSuite(test.get()));
 }
 
 void TestResult::runTestCase(BareTestCase& test) {

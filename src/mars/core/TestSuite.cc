@@ -18,12 +18,18 @@ TestSuite::~TestSuite() {
   });
 }
 
-void TestSuite::run(TestResult& result) {
-  result.startTestSuite(*this);
+void TestSuite::runBare(TestResult& result) {
   foreach([&result](auto test) {
     test->run(result);
   });
-  result.endTestSuite(*this);
+}
+
+const Test& TestSuite::get() const {
+  return *this;
+}
+
+void TestSuite::run(TestResult& result) {
+  result.runTestSuite(*this);
 }
 
 template <typename Init, typename F>

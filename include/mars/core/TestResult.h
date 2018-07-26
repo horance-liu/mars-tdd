@@ -1,14 +1,13 @@
 #ifndef HB35561AB_6A52_4C50_9F89_EF4FE215067E
 #define HB35561AB_6A52_4C50_9F89_EF4FE215067E
 
-#include <string>
 #include <vector>
 #include <mars/except/TestFailure.h>
 #include <mars/core/internal/TestCaseProtector.h>
 
 struct Test;
 struct TestListener;
-struct TestCaseFunctor;
+struct BareTestSuite;
 struct BareTestCase;
 
 struct TestResult : private TestCaseProtector {
@@ -17,9 +16,7 @@ struct TestResult : private TestCaseProtector {
   void startTestRun(const Test&);
   void endTestRun(const Test&);
 
-  void startTestSuite(const Test&);
-  void endTestSuite(const Test&);
-
+  void runTestSuite(BareTestSuite&);
   void runTestCase(BareTestCase&);
 
 private:
