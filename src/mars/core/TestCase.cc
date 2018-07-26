@@ -28,19 +28,21 @@ namespace {
 }
 
 #define PROTECT(method) \
-  result.protect(Functor(this, &TestCase::method,  "in the "#method))
+  p(Functor(this, &TestCase::method,  "in the "#method))
 
-void TestCase::runBare(TestResult& result) {
+void TestCase::runBare(TestCaseProtector& p) {
   if (PROTECT(setUp)) {
     PROTECT(runTest);
   }
   PROTECT(tearDown);
 }
 
+const Test& TestCase::get() const {
+  return *this;
+}
+
 void TestCase::run(TestResult& result) {
-  result.startTestCase(*this);
-  runBare(result);
-  result.endTestCase(*this);
+  result.runTestCase(*this);
 }
 
 int TestCase::countTestCases() const {

@@ -1,6 +1,7 @@
 #include <mars/core/TestResult.h>
 #include <mars/core/TestListener.h>
 #include <mars/core/internal/TestCaseFunctor.h>
+#include <mars/core/internal/BareTestCase.h>
 #include <mars/except/AssertionError.h>
 
 void TestResult::addListener(TestListener& listener) {
@@ -26,12 +27,10 @@ void TestResult::endTestSuite(const Test& test) {
   BOARDCAST(endTestSuite(test));
 }
 
-void TestResult::startTestCase(const Test& test) {
-  BOARDCAST(startTestCase(test));
-}
-
-void TestResult::endTestCase(const Test& test) {
-  BOARDCAST(endTestCase(test));
+void TestResult::runTestCase(BareTestCase& test) {
+  BOARDCAST(startTestCase(test.get()));
+  test.runBare(*this);
+  BOARDCAST(endTestCase(test.get()));
 }
 
 void TestResult::addFailure(std::string&& msg, bool failure) {
@@ -54,7 +53,7 @@ namespace {
 #define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()), true)
 #define ON_ERROR(except) addFailure(msg(except, f.where(), e.what()), false)
 
-bool TestResult::protect(const TestCaseFunctor& f) {
+bool TestResult::operator()(const TestCaseFunctor& f) {
   try {
     return f();
   } catch (const AssertionError& e) {

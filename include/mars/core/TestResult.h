@@ -4,12 +4,14 @@
 #include <string>
 #include <vector>
 #include <mars/except/TestFailure.h>
+#include <mars/core/internal/TestCaseProtector.h>
 
 struct Test;
 struct TestListener;
 struct TestCaseFunctor;
+struct BareTestCase;
 
-struct TestResult {
+struct TestResult : private TestCaseProtector {
   void addListener(TestListener& listener);
 
   void startTestRun(const Test&);
@@ -18,10 +20,10 @@ struct TestResult {
   void startTestSuite(const Test&);
   void endTestSuite(const Test&);
 
-  void startTestCase(const Test&);
-  void endTestCase(const Test&);
+  void runTestCase(BareTestCase&);
 
-  bool protect(const TestCaseFunctor&);
+private:
+  bool operator()(const TestCaseFunctor&) override;
 
 private:
   void addFailure(std::string&&, bool);

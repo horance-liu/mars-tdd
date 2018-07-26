@@ -3,10 +3,13 @@
 
 #include <mars/core/Test.h>
 #include <mars/core/TestFixture.h>
+#include <mars/core/internal/BareTestCase.h>
 
-struct TestCaseFunctor;
+struct TestCase
+  : Test
+  , private TestFixture
+  , private BareTestCase {
 
-struct TestCase : Test, private TestFixture {
   using Test::Test;
 
 private:
@@ -14,10 +17,11 @@ private:
   int countTestCases() const override;
 
 private:
-  virtual void runTest() {}
+  const Test& get() const override;
+  void runBare(TestCaseProtector&) override;
 
 private:
-  void runBare(TestResult& result);
+  virtual void runTest() {}
 };
 
 #endif
