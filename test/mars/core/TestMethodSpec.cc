@@ -6,13 +6,12 @@ namespace {
   std::string result;
 
   struct WasRun : TestFixture {
-    void testMethod() {
-      result += "[runTest]";
-    }
-
-  private:
     void setUp() override {
       result += "[setUp]";
+    }
+
+    void testMethod() {
+      result += "[runTest]";
     }
 
     void tearDown() override {
@@ -29,7 +28,6 @@ namespace {
   };
 
   struct TestMethodSpec : testing::Test {
-  private:
     void SetUp() override {
       result.clear();
       wasSucc = false;

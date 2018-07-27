@@ -13,7 +13,6 @@ private:
   void addFailure(const TestFailure&) override;
   void endTestRun(const Test&) override;
 
-
 private:
   std::ostream& out;
 };

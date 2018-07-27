@@ -2,33 +2,31 @@
 #define HD3E38C9A_3B03_48CE_9A1B_75B41CB012C6
 
 #include <mars/core/TestCase.h>
+#include <mars/core/Method.h>
 
 template <typename Fixture>
 struct TestMethod : TestCase {
-private:
-  using Method = void(Fixture::*)();
-
-public:
-  TestMethod(Method method)
-    : method(method) {}
+  TestMethod(Method<Fixture> method, const char* name = "")
+    : TestCase(name), method(method) {}
 
 private:
   void setUp() override {
-    fixture.setUp();
+    self = new Fixture;
+    self->setUp();
   }
 
   void runTest() override {
-    (self.*method)();
+    (self->*method)();
   }
 
   void tearDown() override {
-    fixture.tearDown();
+    self->tearDown();
+    delete self;
   }
 
 private:
-  Fixture self;
-  Method method;
-  TestFixture& fixture = self;
+  Fixture* self = nullptr;
+  Method<Fixture> method;
 };
 
 #endif
