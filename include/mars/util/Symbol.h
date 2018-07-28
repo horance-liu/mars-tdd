@@ -15,6 +15,9 @@
 # define UNIQUE_ID __LINE__
 #endif
 
-# define UNIQUE_NAME(prefix) JOIN(prefix, UNIQUE_ID)
+#define UNIQUE_NAME(prefix) JOIN(prefix, UNIQUE_ID)
+
+#define EXTENDS(...) , ##__VA_ARGS__
+#define IMPLEMENTS(...) EXTENDS(__VA_ARGS__)
 
 #endif
