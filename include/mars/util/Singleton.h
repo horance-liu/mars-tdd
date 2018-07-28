@@ -15,7 +15,8 @@ protected:
 #define SINGLETON(type) \
   struct type : Singleton<type>
 
-#define GENERIC_SINGLETON(type, ...) \
+#define GENERIC_SINGLETON(type, ...)         \
+  template<typename __VA_ARGS__>             \
   struct type : Singleton<type<__VA_ARGS__>>
 
 #endif
