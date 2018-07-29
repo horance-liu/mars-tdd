@@ -7,11 +7,11 @@
 #define __TEST_NAME(id) JOIN(test_, id)
 #define __AUTO_TEST(id) JOIN(auto_test_, id)
 
-#define __DEF_TEST(id, name)              \
-private:                                  \
+#define __DEF_TEST(id, name)               \
+private:                                   \
 AutoTestMethod __AUTO_TEST(id)             \
   {id, name, &self_type::__TEST_NAME(id)}; \
-public:                                   \
+public:                                    \
 void __TEST_NAME(id)()
 
 #define TEST(name) __DEF_TEST(UNIQUE_ID, name)

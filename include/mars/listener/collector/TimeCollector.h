@@ -12,7 +12,6 @@ struct TimeCollector : TestListener {
   TimeVal suiteTime() const;
   TimeVal totalTime() const;
 
-private:
   void startTestRun(const Test&) override;
   void endTestRun(const Test&) override;
 

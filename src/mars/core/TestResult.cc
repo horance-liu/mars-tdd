@@ -31,14 +31,17 @@ void TestResult::runTestCase(BareTestCase& test) {
   BOARDCAST(endTestCase(test.get()));
 }
 
-void TestResult::addFailure(std::string&& msg, bool failure) {
-  failures.emplace_back(std::move(msg), failure);
+void TestResult::addFailure(const char* who, std::string&& msg, bool failure) {
+  failures.emplace_back(who, std::move(msg), failure);
   BOARDCAST(addFailure(failures.back()));
 }
 
 namespace {
-  std::string msg(const char* why, const char* where, const char* what) {
-    return std::string(why) + ' ' + where + '\n' + what;
+  std::string msg
+    ( const char* why
+    , const char* where
+    , const char* what) {
+    return std::string(why) + ' '  + where + '\n' + what;
   }
 
   struct NilException {
@@ -48,8 +51,8 @@ namespace {
   } const e;
 }
 
-#define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()), true)
-#define ON_ERROR(except) addFailure(msg(except, f.where(), e.what()), false)
+#define ON_FAIL(except)  addFailure(f.who(), msg(except, f.where(), e.what()), true)
+#define ON_ERROR(except) addFailure(f.who(), msg(except, f.where(), e.what()), false)
 
 bool TestResult::operator()(const TestCaseFunctor& f) {
   try {

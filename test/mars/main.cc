@@ -4,6 +4,6 @@
 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
-  run_all_tests(argc, argv);
+  startup(argc, argv);
   return RUN_ALL_TESTS();
 }

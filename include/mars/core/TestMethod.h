@@ -6,7 +6,7 @@
 
 template <typename Fixture>
 struct TestMethod : TestCase {
-  TestMethod(Method<Fixture> method, const char* name = "")
+  TestMethod(Method<Fixture> method, const std::string& name = "")
     : TestCase(name), method(method) {}
 
 private:

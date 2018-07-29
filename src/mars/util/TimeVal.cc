@@ -1,5 +1,6 @@
 #include <mars/util/TimeVal.h>
 #include <sys/time.h>
+#include <sstream>
 
 TimeVal::TimeVal() {
   tv_sec  = 0;
@@ -10,10 +11,13 @@ void TimeVal::now() {
   gettimeofday(this, 0);
 }
 
-bool TimeVal::operator<(const TimeVal& rhs) const {
-  if (tv_sec < rhs.tv_sec) return true;
-  if (rhs.tv_sec < tv_sec) return false;
-  return tv_usec < rhs.tv_usec;
+std::string TimeVal::toString() const {
+  std::stringstream ss;
+  if (tv_sec > 0) {
+    ss << tv_sec << " s ";
+  }
+  ss << tv_usec << " us";
+  return ss.str();
 }
 
 TimeVal& TimeVal::operator-=(const TimeVal& start) {

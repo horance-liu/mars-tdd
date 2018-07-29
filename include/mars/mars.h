@@ -3,7 +3,6 @@
 
 #include <mars/def/FixtureDef.h>
 #include <mars/def/TestDef.h>
-
-int run_all_tests(int argc, char** argv);
+#include <mars/startup/Startup.h>
 
 #endif

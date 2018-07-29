@@ -1,6 +1,8 @@
 #ifndef H355789B7_673B_442E_BCB7_8FFBCB683E48
 #define H355789B7_673B_442E_BCB7_8FFBCB683E48
 
+#include <mars/util/Symbol.h>
+
 template<typename T>
 struct Singleton {
   static T& instance() {

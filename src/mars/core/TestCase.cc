@@ -11,6 +11,10 @@ namespace {
     }
 
   private:
+    const char* who() const override {
+      return self->getName().c_str();
+    }
+
     const char* where() const override {
       return place;
     }

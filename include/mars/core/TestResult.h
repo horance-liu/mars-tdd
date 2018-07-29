@@ -21,7 +21,7 @@ private:
   bool operator()(const TestCaseFunctor&) override;
 
 private:
-  void addFailure(std::string&&, bool);
+  void addFailure(const char*, std::string&&, bool);
 
 private:
   std::vector<TestFailure> failures;

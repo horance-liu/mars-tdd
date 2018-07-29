@@ -4,12 +4,14 @@
 #include <string>
 
 struct TestFailure {
-  TestFailure(std::string&& msg, bool failure);
+  TestFailure(const char* name, std::string&& msg, bool failure);
 
+  const char* getTestName() const;
   bool isFailure() const;
   const std::string& getExceptionMsg() const;
 
 private:
+  const char* name;
   std::string msg;
   bool failure;
 };
