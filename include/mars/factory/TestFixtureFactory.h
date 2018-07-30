@@ -9,9 +9,9 @@ template <typename Fixture>
 struct TestFixtureFactory : TestSuiteFactory {
   using TestSuiteFactory::TestSuiteFactory;
 
-  void add(int id, const TestMethodFactory<Fixture>& factory) {
+  void add(int id, const char* name, Method<Fixture> method) {
     if (!exist(id)) {
-      registry.insert({id, factory});
+      registry.insert({id, {name, method}});
       TestSuiteFactory::add(registry.at(id));
     }
   }

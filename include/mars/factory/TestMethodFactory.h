@@ -3,7 +3,6 @@
 
 #include <mars/factory/TestFactory.h>
 #include <mars/core/TestMethod.h>
-#include <mars/util/TypeName.h>
 
 template <typename Fixture>
 struct TestMethodFactory : TestFactory {

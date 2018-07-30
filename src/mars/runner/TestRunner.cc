@@ -1,20 +1,10 @@
 #include <mars/runner/TestRunner.h>
-#include <mars/factory/TestSuiteFactory.h>
+#include <mars/factory/TestFactory.h>
 #include <mars/core/Test.h>
 
-namespace {
-  TestFactory& root() {
-    return TestSuiteFactory::root();
-  }
-
-  Test* make() {
-    return root().make();
-  }
-}
-
-TestRunner::TestRunner(std::ostream& os)
-  : printer(os), root(make()) {
-  result.addListener(printer);
+TestRunner::TestRunner(TestListener& listener, TestFactory& factory)
+  : root(factory.make()) {
+  result.addListener(listener);
 }
 
 TestRunner::~TestRunner() {

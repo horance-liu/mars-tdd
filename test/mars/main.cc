@@ -1,6 +1,5 @@
-#define GTEST_DONT_DEFINE_TEST 1
 #include <gtest/gtest.h>
-#include <mars/mars.h>
+#include <mars/startup/Startup.h>
 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
