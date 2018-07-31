@@ -10,7 +10,7 @@ struct TestMethodFactory : TestFactory {
     : name(name), method(method) {}
 
 private:
-  Test* make() override {
+  Test* make() const override {
     return new TestMethod<Fixture>(method, name);
   }
 

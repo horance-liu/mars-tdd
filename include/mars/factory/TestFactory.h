@@ -4,7 +4,7 @@
 struct Test;
 
 struct TestFactory {
-  virtual Test* make() = 0;
+  virtual Test* make() const = 0;
   virtual ~TestFactory() {}
 };
 

@@ -22,7 +22,7 @@ struct TestFixtureFactory : TestSuiteFactory {
   }
 
 private:
-  Test* make() override {
+  Test* make() const override {
     static Fixture dummy; // register all test methods to registry.
     return TestSuiteFactory::make();
   }
